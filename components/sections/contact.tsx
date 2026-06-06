@@ -96,10 +96,10 @@ export function Contact() {
               ))}
             </div>
 
-            <div className="pt-6">
+            <div className="pt-6 overflow-hidden">
               <a
                 href="mailto:khoa2006nguyen811@gmail.com"
-                className="inline-block border border-grass bg-grass/10 px-8 py-3 text-xs uppercase tracking-[0.2em] text-leaf shadow-[0_0_24px_-6px_#5b8a3c] transition-all hover:bg-grass hover:text-primary-foreground hover:shadow-[0_0_32px_-4px_#7ec850]"
+                className="inline-block max-w-full truncate border border-grass bg-grass/10 px-4 py-2.5 sm:px-8 sm:py-3 text-[9px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.2em] text-leaf shadow-[0_0_24px_-6px_#5b8a3c] transition-all hover:bg-grass hover:text-primary-foreground hover:shadow-[0_0_32px_-4px_#7ec850]"
               >
                 khoa2006nguyen811@gmail.com
               </a>
