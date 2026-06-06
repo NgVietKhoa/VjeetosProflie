@@ -43,7 +43,7 @@ export function About() {
 
         {/* Right Side: Scrollable biography and stats info */}
         <div className="space-y-12">
-          <Reveal className="space-y-12" amount={0.15}>
+          <Reveal className="space-y-12" amount={0.02}>
             <RevealItem>
               <p className="text-balance text-xl leading-relaxed text-foreground sm:text-2xl font-light">
                 I am a Fullstack Developer based in Hanoi, Vietnam. Born in 2006, I approach software engineering with a passion for building robust web systems and clean, optimized digital architectures.

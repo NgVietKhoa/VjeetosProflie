@@ -41,7 +41,6 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative mx-auto max-w-6xl px-6 py-32">
-      <SectionLabel index="04" label="CONNECT" />
 
       <div ref={ref} className="mx-auto max-w-3xl">
         <span className="font-pixel text-xs text-grass">// terminal</span>

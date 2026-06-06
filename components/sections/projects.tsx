@@ -1,7 +1,8 @@
 'use client'
 
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
+import { AnimatePresence } from 'framer-motion'
 
 type Project = {
   index: string
@@ -71,9 +72,9 @@ function ProjectCard({
     offset: ['start start', 'end start'],
   })
 
-  // As the user scrolls past this card, scale it down and fade it out
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9])
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
+  // As the user scrolls past this card, scale it down and fade it out completely before the next one overlaps
+  const scale = useTransform(scrollYProgress, [0, 0.3, 0.6], [1, 1, 0.85])
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.6], [1, 1, 0])
 
   const handleNext = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -90,7 +91,7 @@ function ProjectCard({
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[100vh] flex flex-col justify-start"
+      className="relative w-full h-[140vh] flex flex-col justify-start"
     >
       <motion.div
         style={{
@@ -270,17 +271,55 @@ function ProjectCard({
   )
 }
 
+const TITLE_TEXT = "FEATURED PROJECTS"
+
 export function Projects() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  })
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    damping: 30,
+    stiffness: 120,
+    mass: 0.2,
+  })
+
   return (
-    <section id="projects" className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-      {/* Sticky Header */}
+    <section ref={containerRef} id="projects" className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
+      
+      {/* Horizontal Header (Fades out letter-by-letter as you scroll) */}
       <div className="mb-20">
         <span className="font-pixel text-[9px] tracking-[0.3em] text-grass uppercase block mb-4">
           // 03_PROJECTS
         </span>
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <h2 className="font-sans font-black tracking-tight text-4xl sm:text-5xl text-foreground uppercase">
-            Featured Projects
+          <h2 className="font-sans font-black tracking-tight text-3xl sm:text-5xl text-foreground uppercase whitespace-nowrap">
+            {TITLE_TEXT.split('').map((char, i) => {
+              const start = i * 0.002
+              const end = start + 0.02
+              const opacity = useTransform(smoothProgress, [start, end], [1, isMobile ? 1 : 0])
+              const y = useTransform(smoothProgress, [start, end], [0, isMobile ? 0 : -10])
+
+              return (
+                <motion.span
+                  key={i}
+                  style={{ opacity, y, display: 'inline-block' }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </motion.span>
+              )
+            })}
           </h2>
           <a
             href="https://github.com/NgVietKhoa"
@@ -292,6 +331,37 @@ export function Projects() {
           </a>
         </div>
         <div className="mt-6 h-px w-full bg-gradient-to-r from-grass/60 via-grass/20 to-transparent" />
+      </div>
+
+      {/* Vertical Sticky Sidebar Title (Fades in letter-by-letter on left margin, Desktop only) */}
+      <div className="absolute top-0 left-[-55px] bottom-48 w-8 z-20 pointer-events-none hidden md:block">
+        <div className="sticky top-[42vh] h-fit flex flex-col items-center">
+          <div className="transform -rotate-90 origin-center whitespace-nowrap">
+            <motion.span
+              style={{ opacity: useTransform(smoothProgress, [0, 0.015, 0.85, 0.95], [0, 0.6, 0.6, 0]) }}
+              className="font-pixel text-[7px] tracking-[0.2em] text-grass uppercase block mb-1 text-center"
+            >
+              // 03_PROJECTS
+            </motion.span>
+            <h2 className="font-sans font-black tracking-tight text-lg md:text-2xl text-foreground/80 uppercase">
+              {TITLE_TEXT.split('').map((char, i) => {
+                const start = i * 0.002 + 0.015
+                const end = start + 0.02
+                const opacity = useTransform(smoothProgress, [start, end, 0.85, 0.95], [0, 1, 1, 0])
+                const x = useTransform(smoothProgress, [start, end], [10, 0])
+
+                return (
+                  <motion.span
+                    key={i}
+                    style={{ opacity, x, display: 'inline-block' }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                )
+              })}
+            </h2>
+          </div>
+        </div>
       </div>
 
       {/* Stacking Card List */}
