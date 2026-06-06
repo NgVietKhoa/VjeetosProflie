@@ -18,7 +18,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative mx-auto max-w-6xl overflow-visible px-6 py-32"
+      className="relative mx-auto max-w-6xl overflow-visible px-6 py-32 mobile-no-reveal"
     >
       {/* Two column split grid layout */}
       <div className="grid gap-16 lg:grid-cols-[1fr_1.3fr]">

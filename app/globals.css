@@ -225,10 +225,14 @@
   }
 
   /* Bypasses heavy page entrance translations on mobile to prevent scroll locks & lag */
-  .main-content-wrap {
+  .main-content-wrap.is-loaded {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
     animation: none !important;
+  }
+  .main-content-wrap.is-loading {
+    opacity: 0 !important;
+    pointer-events: none;
   }
 }

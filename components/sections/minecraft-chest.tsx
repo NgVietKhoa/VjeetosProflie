@@ -76,7 +76,7 @@ export function MinecraftChest() {
   return (
     <div
       ref={containerRef}
-      className="relative z-10 h-[280vh] bg-transparent w-full overflow-visible"
+      className="relative z-10 h-[150vh] md:h-[280vh] bg-transparent w-full overflow-visible"
     >
       {/* Sticky viewport container */}
       <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">

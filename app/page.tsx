@@ -27,7 +27,7 @@ export default function Page() {
         initial={{ opacity: 0, y: 100 }}
         animate={isLoading ? { opacity: 0, y: 100 } : { opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.05 }}
-        className="relative main-content-wrap"
+        className={`relative main-content-wrap ${isLoading ? 'is-loading' : 'is-loaded'}`}
       >
         <Hero />
         <TechMarquee />
