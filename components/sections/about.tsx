@@ -1,6 +1,7 @@
 'use client'
 
 import { Reveal, RevealItem } from '../reveal'
+import { useState, useEffect } from 'react'
 
 const STATS = [
   { value: '1+', label: 'YEAR_DEVELOPING' },
@@ -14,7 +15,49 @@ const FOCUS_AREAS = [
   { title: 'Performance Optimization', desc: 'Optimizing data queries, system queries, memory footprints, and asset delivery pipelines for rapid response cycles.' },
 ]
 
+// Conditional Reveal wrapper to completely bypass animation logic on mobile viewports
+function ConditionalReveal({
+  isMobile,
+  children,
+}: {
+  isMobile: boolean
+  children: React.ReactNode
+}) {
+  if (isMobile) {
+    return <div className="space-y-12">{children}</div>
+  }
+  return (
+    <Reveal className="space-y-12" amount={0.02}>
+      {children}
+    </Reveal>
+  )
+}
+
+function ConditionalRevealItem({
+  isMobile,
+  children,
+  className,
+}: {
+  isMobile: boolean
+  children: React.ReactNode
+  className?: string
+}) {
+  if (isMobile) {
+    return <div className={className}>{children}</div>
+  }
+  return <RevealItem className={className}>{children}</RevealItem>
+}
+
 export function About() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <section
       id="about"
@@ -23,9 +66,9 @@ export function About() {
       {/* Two column split grid layout */}
       <div className="grid gap-16 lg:grid-cols-[1fr_1.3fr]">
         
-        {/* Left Side: Sticky large title with left accent bar */}
+        {/* Left Side: Sticky large title with left accent bar (always animated) */}
         <div className="relative lg:sticky lg:top-28 self-start border-l-[5px] border-grass pl-6 md:pl-8 py-2">
-          <Reveal>
+          <Reveal amount={0.02}>
             <RevealItem>
               <span className="font-pixel text-[10px] tracking-[0.3em] text-grass block mb-4">
                 // PROFILE_CORE
@@ -41,23 +84,23 @@ export function About() {
           </Reveal>
         </div>
 
-        {/* Right Side: Scrollable biography and stats info */}
+        {/* Right Side: Scrollable biography and stats info (conditional animation) */}
         <div className="space-y-12">
-          <Reveal className="space-y-12" amount={0.02}>
-            <RevealItem>
+          <ConditionalReveal isMobile={isMobile}>
+            <ConditionalRevealItem isMobile={isMobile}>
               <p className="text-balance text-xl leading-relaxed text-foreground sm:text-2xl font-light">
                 I am a Fullstack Developer based in Hanoi, Vietnam. Born in 2006, I approach software engineering with a passion for building robust web systems and clean, optimized digital architectures.
               </p>
-            </RevealItem>
+            </ConditionalRevealItem>
             
-            <RevealItem>
+            <ConditionalRevealItem isMobile={isMobile}>
               <p className="text-pretty text-base leading-relaxed text-muted-foreground">
                 My journey is driven by continuous learning and absolute dedication to the craft. I specialize in designing and shipping performant web applications, bridging responsive user experiences with structured backend services.
               </p>
-            </RevealItem>
+            </ConditionalRevealItem>
 
             {/* Stats Grid */}
-            <RevealItem>
+            <ConditionalRevealItem isMobile={isMobile}>
               <div className="grid grid-cols-3 gap-4">
                 {STATS.map((s) => (
                   <div
@@ -73,19 +116,19 @@ export function About() {
                   </div>
                 ))}
               </div>
-            </RevealItem>
+            </ConditionalRevealItem>
 
             {/* Philosophy Section */}
-            <RevealItem className="space-y-4">
+            <ConditionalRevealItem isMobile={isMobile} className="space-y-4">
               <span className="font-pixel text-xs text-grass block">// core_values</span>
               <h3 className="text-lg font-pixel uppercase tracking-wide text-foreground">MY PHILOSOPHY</h3>
               <p className="text-pretty text-base leading-relaxed text-muted-foreground">
                 Coding is not just about writing syntax; it is about engineering sustainable solutions. I prioritize modular designs, readable code paths, and proactive performance tuning. I believe starting with a solid structural blueprint is the best investment for software scaling and technical debt reduction.
               </p>
-            </RevealItem>
+            </ConditionalRevealItem>
 
             {/* Focus Areas Section */}
-            <RevealItem className="space-y-4">
+            <ConditionalRevealItem isMobile={isMobile} className="space-y-4">
               <span className="font-pixel text-xs text-grass block">// specialties</span>
               <h3 className="text-lg font-pixel uppercase tracking-wide text-foreground">FOCUS AREAS</h3>
               <div className="space-y-4">
@@ -96,8 +139,8 @@ export function About() {
                   </div>
                 ))}
               </div>
-            </RevealItem>
-          </Reveal>
+            </ConditionalRevealItem>
+          </ConditionalReveal>
         </div>
       </div>
     </section>
