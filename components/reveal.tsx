@@ -23,7 +23,7 @@ const item: Variants = {
 export function Reveal({
   children,
   className,
-  amount = 0.3,
+  amount = 0.02,
 }: {
   children: ReactNode
   className?: string

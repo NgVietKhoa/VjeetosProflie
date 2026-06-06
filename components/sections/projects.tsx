@@ -206,16 +206,16 @@ function ProjectCard({
             
             {/* Carousel Images with AnimatePresence */}
             <div className="absolute inset-0 pt-11">
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout">
                 <motion.img
                   key={imageIndex}
                   src={project.previews[imageIndex]}
                   alt={`${project.name} UI preview ${imageIndex + 1}`}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.02 }}
-                  transition={{ duration: 0.35, ease: 'easeInOut' }}
-                  className="w-full h-full object-cover object-top origin-top filter brightness-[0.85] group-hover/preview:brightness-100 transition-all duration-500"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25, ease: 'linear' }}
+                  className="w-full h-full object-cover object-top origin-top filter brightness-[0.85] group-hover/preview:brightness-100 transition-all duration-300"
                 />
               </AnimatePresence>
             </div>
