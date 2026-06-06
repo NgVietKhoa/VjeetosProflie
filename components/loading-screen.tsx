@@ -23,8 +23,6 @@ export function LoadingScreen({ onComplete }: { onComplete?: () => void }) {
 
   // 1. Loading progress interval simulation
   useEffect(() => {
-    document.body.style.overflow = 'hidden'
-
     let currentProgress = 0
     const interval = setInterval(() => {
       const increment = Math.floor(Math.random() * 8) + 2
@@ -41,7 +39,6 @@ export function LoadingScreen({ onComplete }: { onComplete?: () => void }) {
         clearInterval(interval)
         setTimeout(() => {
           setLoadingComplete(true)
-          document.body.style.overflow = 'unset'
           if (onComplete) onComplete()
         }, 500)
       }
@@ -49,7 +46,6 @@ export function LoadingScreen({ onComplete }: { onComplete?: () => void }) {
 
     return () => {
       clearInterval(interval)
-      document.body.style.overflow = 'unset'
     }
   }, [onComplete])
 

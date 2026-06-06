@@ -213,3 +213,22 @@
     animation: none !important;
   }
 }
+
+@media (max-width: 767px) {
+  /* Bypasses reveal animations on mobile to ensure immediate loading and layout stability */
+  .mobile-no-reveal,
+  .mobile-no-reveal * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Bypasses heavy page entrance translations on mobile to prevent scroll locks & lag */
+  .main-content-wrap {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
