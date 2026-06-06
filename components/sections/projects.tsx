@@ -22,12 +22,18 @@ const PROJECTS: Project[] = [
     index: '01',
     name: 'Vjeetos Media',
     role: 'Fullstack · React · TypeScript',
-    desc: 'An all-in-one multimedia platform combining an international cinema library with an ad-free YouTube Premium streaming experience. Focused on performance and seamless UX.',
+    desc: 'A next-generation cinematic streaming platform featuring adaptive HLS playback, smart watchlist persistence, playback progress auto-resume, and a premium glassmorphic interface.',
     tags: ['React', 'TypeScript', 'Zustand', 'Tailwind'],
     github: 'https://github.com/NgVietKhoa/VjeetosMedia',
     live: 'https://example.com',
     logo: '/vjeetosmedia.png',
-    previews: ['/preview_vjeetosmedia.png', '/preview_vjeetosmedia_2.png'],
+    previews: [
+      '/vjeetos_media/vm1.png',
+      '/vjeetos_media/vm2.png',
+      '/vjeetos_media/vm3.png',
+      '/vjeetos_media/vm4.png',
+      '/vjeetos_media/vm5.png'
+    ],
     accentColor: '#f97316',
   },
   {
@@ -98,10 +104,10 @@ function ProjectCard({
           scale,
           opacity,
         }}
-        className="sticky top-20 md:top-36 w-full h-[75vh] md:h-[60vh] border border-glass-border bg-[#0d0d12] overflow-hidden transition-all duration-300 hover:border-glass-border-hover hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col-reverse md:flex-row z-10"
+        className="sticky top-[calc((100vh-500px)/2)] md:top-[calc((100vh-520px)/2)] w-full h-[500px] md:h-[520px] border border-glass-border bg-[#0d0d12] overflow-hidden transition-all duration-300 hover:border-glass-border-hover hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col-reverse md:flex-row z-10"
       >
         {/* Project Info Block */}
-        <div className="flex-1 p-4 md:p-10 flex flex-col justify-between z-10">
+        <div className="w-full md:w-[35%] p-4 md:p-8 flex flex-col justify-between z-10 shrink-0">
           <div>
             {/* Header info */}
             <div className="flex items-center gap-3 md:gap-4 mb-2 md:mb-4">
@@ -215,7 +221,7 @@ function ProjectCard({
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.25, ease: 'linear' }}
-                  className="w-full h-full object-cover object-top origin-top filter brightness-[0.85] group-hover/preview:brightness-100 transition-all duration-300"
+                  className="w-full h-full object-contain object-top origin-top filter brightness-[0.85] group-hover/preview:brightness-100 transition-all duration-300"
                 />
               </AnimatePresence>
             </div>
@@ -296,7 +302,7 @@ export function Projects() {
   })
 
   return (
-    <section ref={containerRef} id="projects" className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <section ref={containerRef} id="projects" className="relative mx-auto max-w-[1300px] px-6 py-24 md:py-32">
       
       {/* Horizontal Header (Fades out letter-by-letter as you scroll) */}
       <div className="mb-20">
