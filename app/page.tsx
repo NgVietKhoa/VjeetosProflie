@@ -21,26 +21,22 @@ export default function Page() {
   return (
     <LenisProvider>
       <LoadingScreen onComplete={() => setIsLoading(false)} />
-      {!isLoading && (
-        <>
-          <PixelCursor />
-          <ScrollProgress />
-          <motion.main
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.05 }}
-            className="relative"
-          >
-            <Hero />
-            <TechMarquee />
-            <MinecraftChest />
-            <About />
-            <Skills />
-            <Projects />
-            <Contact />
-          </motion.main>
-        </>
-      )}
+      <PixelCursor />
+      <ScrollProgress />
+      <motion.main
+        initial={{ opacity: 0, y: 100 }}
+        animate={isLoading ? { opacity: 0, y: 100 } : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.05 }}
+        className="relative"
+      >
+        <Hero />
+        <TechMarquee />
+        <MinecraftChest />
+        <About />
+        <Skills />
+        <Projects />
+        <Contact />
+      </motion.main>
     </LenisProvider>
   )
 }

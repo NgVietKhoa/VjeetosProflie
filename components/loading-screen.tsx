@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { useLenis } from './lenis-provider'
 
 const LOADING_MESSAGES = [
   'INITIALIZING SYSTEM...',
@@ -18,19 +19,18 @@ export function LoadingScreen({ onComplete }: { onComplete?: () => void }) {
   const [progress, setProgress] = useState(0)
   const [messageIndex, setMessageIndex] = useState(0)
   const [loadingComplete, setLoadingComplete] = useState(false)
+  const { lenis } = useLenis()
 
+  // 1. Loading progress interval simulation
   useEffect(() => {
-    // Prevent scrolling during load
     document.body.style.overflow = 'hidden'
 
     let currentProgress = 0
     const interval = setInterval(() => {
-      // Random increment steps to simulate real load
       const increment = Math.floor(Math.random() * 8) + 2
       currentProgress = Math.min(100, currentProgress + increment)
       setProgress(currentProgress)
 
-      // Dynamic message updates based on progress
       const targetMsgIndex = Math.min(
         LOADING_MESSAGES.length - 1,
         Math.floor((currentProgress / 100) * LOADING_MESSAGES.length)
@@ -43,7 +43,7 @@ export function LoadingScreen({ onComplete }: { onComplete?: () => void }) {
           setLoadingComplete(true)
           document.body.style.overflow = 'unset'
           if (onComplete) onComplete()
-        }, 500) // Hold briefly at 100%
+        }, 500)
       }
     }, 100)
 
@@ -52,6 +52,19 @@ export function LoadingScreen({ onComplete }: { onComplete?: () => void }) {
       document.body.style.overflow = 'unset'
     }
   }, [onComplete])
+
+  // 2. Lock scrolling via Lenis instance to prevent background scrolling lag
+  useEffect(() => {
+    if (!lenis) return
+    if (!loadingComplete) {
+      lenis.stop()
+    } else {
+      lenis.start()
+    }
+    return () => {
+      lenis.start()
+    }
+  }, [lenis, loadingComplete])
 
   return (
     <AnimatePresence>
