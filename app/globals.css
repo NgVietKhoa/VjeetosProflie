@@ -1,0 +1,215 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-press-start);
+  --font-display: var(--font-press-start);
+  --font-sans: var(--font-dm-mono), ui-monospace, monospace;
+  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-grass: var(--grass);
+  --color-leaf: var(--leaf);
+  --color-muted-ink: var(--muted-ink);
+  --color-glass: var(--glass);
+  --color-glass-border: var(--glass-border);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #f0ede6;
+  --surface: #111111;
+  --surface-elevated: #161616;
+  --grass: #5b8a3c;
+  --leaf: #7ec850;
+  --muted-ink: #666660;
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  --card: #111111;
+  --card-foreground: #f0ede6;
+  --popover: #161616;
+  --popover-foreground: #f0ede6;
+  --primary: #5b8a3c;
+  --primary-foreground: #0a0a0a;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #f0ede6;
+  --muted: #161616;
+  --muted-foreground: #666660;
+  --accent: #7ec850;
+  --accent-foreground: #0a0a0a;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #5b8a3c;
+  --radius: 0px;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #f0ede6;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply font-mono;
+    background-color: var(--background);
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        rgba(255, 255, 255, 0.06) 1px,
+        transparent 0
+      );
+    background-size: 8px 8px;
+  }
+  ::selection {
+    background: var(--grass);
+    color: #0a0a0a;
+  }
+}
+
+/* Pixel font helper */
+@utility font-pixel {
+  font-family: var(--font-press-start), monospace;
+}
+
+/* Chunky pixel-edge border via layered box-shadow */
+.pixel-edge {
+  box-shadow:
+    4px 0 0 #1a1a1a,
+    -4px 0 0 #1a1a1a,
+    0 4px 0 #1a1a1a,
+    0 -4px 0 #1a1a1a;
+}
+
+.pixel-edge-grass {
+  box-shadow:
+    0 0 0 2px #0a0a0a,
+    0 0 0 4px var(--grass);
+}
+
+/* Denser surface grid overlay */
+.grid-overlay {
+  background-image:
+    radial-gradient(
+      circle at 1px 1px,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 0
+    );
+  background-size: 8px 8px;
+}
+
+/* Blinking cursor */
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.cursor-blink {
+  animation: blink 1s steps(1) infinite;
+}
+
+/* Floating pixel decorations */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes float-slower {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+}
+.float-slower {
+  animation: float-slower 9s ease-in-out infinite;
+}
+
+/* 3D parallax scene gets perspective so layered blocks read as depth */
+.parallax-scene {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+/* Pixel cursor on pointer-capable devices */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-slow,
+  .float-slower,
+  .cursor-blink,
+  .animate-marquee {
+    animation: none !important;
+  }
+}

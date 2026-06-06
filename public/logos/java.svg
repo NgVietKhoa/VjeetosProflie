@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Steaming lines -->
+  <path d="M6 3c.5 1 .5 2 0 3M10 2c.7 1 .7 2.5 0 3.5M14 3c.5 1 .5 2 0 3" stroke="#f89820" />
+  <!-- Coffee Cup -->
+  <path d="M18 8H4v7a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V8z" stroke="#5382a1" />
+  <!-- Cup Handle -->
+  <path d="M18 10h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1" stroke="#5382a1" />
+  <!-- Saucer Plate -->
+  <path d="M2 21h18" stroke="#5382a1" />
+</svg>
